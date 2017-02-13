@@ -4,10 +4,10 @@ import numpy as np
 from matplotlib import pyplot as plt
 import time
 
-cap = cv2.VideoCapture('hall_box_battery_1024.mp4')
-#cap = cv2.VideoCapture(0)
-#cap.set(cv.CV_CAP_PROP_FRAME_WIDTH, 640)
-#cap.set(cv.CV_CAP_PROP_FRAME_HEIGHT, 480)
+#cap = cv2.VideoCapture('hall_box_battery_1024.mp4')
+cap = cv2.VideoCapture(0)
+cap.set(cv.CV_CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv.CV_CAP_PROP_FRAME_HEIGHT, 480)
 
 
 while(True):
