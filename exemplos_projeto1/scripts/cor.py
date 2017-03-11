@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
+__author__ = ["Rachel P. B. Moraes", "Igor Montagner", "Fabio Miranda"]
+
 import rospy
 import numpy as np
 import tf
