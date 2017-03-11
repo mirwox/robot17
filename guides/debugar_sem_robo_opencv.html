@@ -1,0 +1,20 @@
+<h1 id="como-testar-seu-projeto-sem-um-robô-físico">Como testar seu projeto sem um robô físico</h1>
+<h2 id="da-primeira-vez">Da primeira vez</h2>
+<p>Mude para o diretório catkin_ws/src</p>
+<p>cd ~catkin_ws/src</p>
+<p>Baixe o projeto pi_vision, que contém o ros2opencv, de que precisamos</p>
+<pre><code>git clone https://github.com/hansonrobotics/pi_vision</code></pre>
+<p>Baixe os pacotes de que o pi_vision precisa:</p>
+<pre><code>sudo apt-get install ros-indigo-cv-bridge ros-indigo-image-transport ros-indigo-mjpeg-server ros-indigo-openni-camera  ros-indigo-usb-cam</code></pre>
+<p>Mude para o diretório catkin:</p>
+<pre><code>cd ~/catkin</code></pre>
+<p>Compile tudo (deve levar 1 ou 2 minutos):</p>
+<pre><code>catkin_make</code></pre>
+<h2 id="para-fazer-o-teste-todas-as-vezes">Para fazer o teste, todas as vezes:</h2>
+<h3 id="com-a-webcam">Com a webcam:</h3>
+<p>Use o seguinte comando:</p>
+<pre><code>roslaunch ros2opencv usb_cam.launch</code></pre>
+<h3 id="com-um-arquivo-de-vídeo-na-extensão-avi">Com um arquivo de vídeo na extensão avi:</h3>
+<pre><code>roslaunch ros2opencv avi2ros.launch input:=ARQUIVO_DE_VIDEO.avi2ros</code></pre>
+<h3 id="rode-o-robô-virtual">Rode o robô Virtual</h3>
+<pre><code>roslaunch neato_simulator neato_playground.launch</code></pre>

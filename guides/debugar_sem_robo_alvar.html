@@ -1,0 +1,16 @@
+<h1 id="como-desenvolver-sem-robô---alvar">Como desenvolver sem robô - Alvar</h1>
+<p>Siga os passos a seguir para testar seus programas sem ter um robô, se você está usando marcadores Alvar</p>
+<h2 id="instalar-ros-indigo-ar-track-alvar">1. Instalar ros-indigo-ar-track-alvar</h2>
+<pre><code>sudo apt-get install ros-indigo-ar-track-alvar</code></pre>
+<h2 id="abrir-a-webcam">2. Abrir a webcam</h2>
+<pre><code>roslaunch tag_tracking usb_cam</code></pre>
+<p>(a webcam deve acender)</p>
+<h2 id="abrir-rastreamento-da-webcam">3. Abrir rastreamento da webcam</h2>
+<pre><code>roslaunch tag_tracking ar_track_usb_cam</code></pre>
+<h2 id="para-ver-se-detectou">4. Para ver se detectou</h2>
+<pre><code>rostopic echo ar_pose_marker</code></pre>
+<h2 id="para-usar-o-robô-virtual">5. Para usar o robô virtual</h2>
+<pre><code>roslaunch neato_simulator neato_playground.launch</code></pre>
+<h2 id="para-imprimir-marcadores">Para imprimir marcadores</h2>
+<p>Lembre-se de que para gerar o arquivo de marcador para imprimir, use o comando</p>
+<pre><code>rosrun ar_track_alvar createMarker</code></pre>
