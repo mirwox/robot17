@@ -25,7 +25,7 @@ buffer = tf2_ros.Buffer()
 
 
 x_desejado = 0.12
-#y_desejado = 0.10
+y_desejado = 0.10
 z_desejado = 1.80
 
 def recebe(msg):
@@ -76,7 +76,6 @@ if __name__=="__main__":
 		# Loop principal - todo programa ROS deve ter um
 		while not rospy.is_shutdown():
 			if id == 100:
-				if
 				print ("z: ",z)
 				print ("z desejado: ",z_desejado)
 				if z_desejado < z-0.5:
