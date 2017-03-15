@@ -90,7 +90,7 @@ if __name__=="__main__":
 		 	 		velocidade_saida.publish(vel)
 				 	rospy.sleep(0.05)
 
-				 else:
+				else:
 				 	print("Vá para trás")
 				 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
 			 		velocidade_saida.publish(vel)
@@ -103,4 +103,4 @@ if __name__=="__main__":
 			rospy.sleep(0.05)
 
 	except rospy.ROSInterruptException:
-print("Ocorreu uma exceção com o rospy")
+		print("Ocorreu uma exceção com o rospy")
