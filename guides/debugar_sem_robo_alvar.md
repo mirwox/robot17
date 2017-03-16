@@ -15,6 +15,11 @@ Siga os passos a seguir para testar seus programas sem ter um robô, se você es
 ## 3. Abrir rastreamento da webcam
     roslaunch tag_tracking ar_track_usb_cam
 
+ Para que esta etapa funcione, você precisa ter um **arquivo de calibração de câmera**.
+
+Veja [aqui mais detalhes](calibrar_camera.md) sobre como calibrar
+
+
 ## 4. Para ver se detectou
     rostopic echo ar_pose_marker
 
