@@ -20,6 +20,8 @@ y = 0
 z = 0 
 id = 0
 
+frame = "camera_frame"
+# frame = "head_camera"  # DESCOMENTE para usar com webcam USB via roslaunch tag_tracking usbcam
 
 tfl = 0
 
@@ -34,12 +36,12 @@ def recebe(msg):
 		id = marker.id
 		marcador = "ar_marker_" + str(id)
 
-		print(tf_buffer.can_transform("head_camera", marcador, rospy.Time(0)))
+		print(tf_buffer.can_transform(frame, marcador, rospy.Time(0)))
 		header = Header(frame_id=marcador)
 		# Procura a transformacao em sistema de coordenadas entre a base do robo e o marcador numero 100
 		# Note que para seu projeto 1 voce nao vai precisar de nada que tem abaixo, a 
 		# Nao ser que queira levar angulos em conta
-		trans = tf_buffer.lookup_transform("head_camera", marcador, rospy.Time(0))
+		trans = tf_buffer.lookup_transform(frame, marcador, rospy.Time(0))
 		
 		# Separa as translacoes das rotacoes
 		x = trans.transform.translation.x
@@ -66,6 +68,7 @@ def recebe(msg):
 
 if __name__=="__main__":
 
+	print("Coordenadas configuradas para usar Neato, para usar webcam USB altere no código fonte a variável frame")
 
 	rospy.init_node("marcador") # Como nosso programa declara  seu nome para o sistema ROS
 
