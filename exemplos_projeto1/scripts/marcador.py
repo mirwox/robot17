@@ -38,6 +38,7 @@ z_desejado = 0.50
 
 #***********BUMP***********
 def bateu(dado):
+	print('OLAaaa')
 	print("{} {} {} {}".format(dado.leftSide, dado.leftFront, dado.rightFront, dado.rightSide))
 	global ls
 	global rs
@@ -109,7 +110,7 @@ if __name__=="__main__":
 	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1) # Para podermos controlar o robo
 
 	tfl = tf2_ros.TransformListener(tf_buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
-
+	
 
 	try:
 		# Loop principal - todo programa ROS deve ter um
@@ -117,14 +118,15 @@ if __name__=="__main__":
 			print("Oeee")
 			velocidade = Twist(Vector3(10, 0, 0), Vector3(0, 0, 0))
 			velocidade_saida.publish(velocidade)
-			rospy.sleep(2)
+			print("antes")
+			rospy.Subscriber("/bump", Bump, bateu, queue_size = 1)
+			print("depois")
+			rospy.sleep(0.1)
 
-
-			velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 3)
-			recebe_scan = rospy.Subscriber("/bump", Bump, bateu)
-			print(recebe_scan)
+			
 
 			if ls == lf == rs == rf == 0:
+				pass
 			#	if id == 100:
 				# 	print ("z: ",z)
 				# 	print ("z desejado: ",z_desejado)
@@ -146,46 +148,46 @@ if __name__=="__main__":
 				#  		velocidade_saida.publish(vel)
 				# 	 	rospy.sleep(0.05)
 
-					print("Estou na área A!")
-					print ("x: ",x)
-					print ("x desejado: ",x_desejado)
+				# 	print("Estou na área A!")
+				# 	print ("x: ",x)
+				# 	print ("x desejado: ",x_desejado)
 
-					if x_desejado < x-0.3:
-						print("Vá para direita")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-						velocidade_saida.publish(vel)
-						rospy.sleep(0.2)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-					  	rospy.sleep(0.2)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
-						rospy.sleep(0.2)
+				# 	if x_desejado < x-0.3:
+				# 		print("Vá para direita")
+				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+				# 		velocidade_saida.publish(vel)
+				# 		rospy.sleep(0.2)
+				# 		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+				# 	  	velocidade_saida.publish(vel)
+				# 	  	rospy.sleep(0.2)
+				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+				# 		velocidade_saida.publish(vel)
+				# 		rospy.sleep(0.2)
 
-					elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
-						print("X CERTO")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
-			 		 	velocidade_saida.publish(vel)
-						rospy.sleep(0.05)
+				# 	elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
+				# 		print("X CERTO")
+				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
+			 # 		 	velocidade_saida.publish(vel)
+				# 		rospy.sleep(0.05)
 
-					else:
-						print("Vá para esquerda")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-						velocidade_saida.publish(vel)
-						rospy.sleep(0.2)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-					  	rospy.sleep(0.2)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
-						rospy.sleep(0.2)
+				# 	else:
+				# 		print("Vá para esquerda")
+				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+				# 		velocidade_saida.publish(vel)
+				# 		rospy.sleep(0.2)
+				# 		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+				# 	  	velocidade_saida.publish(vel)
+				# 	  	rospy.sleep(0.2)
+				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+				# 		velocidade_saida.publish(vel)
+				# 		rospy.sleep(0.2)
 
 
-				else:
-					print("Não encontrei o marcador 100")
-					vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
-					velocidade_saida.publish(vel)
-				rospy.sleep(0.05)
+				# else:
+				# 	print("Não encontrei o marcador 100")
+				# 	vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+				# 	velocidade_saida.publish(vel)
+				# rospy.sleep(0.05)
 
 			elif ls == 1:
 					print("Vá para direita")
