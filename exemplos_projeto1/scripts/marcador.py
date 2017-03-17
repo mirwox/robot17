@@ -14,6 +14,8 @@ from ar_track_alvar_msgs.msg import AlvarMarker, AlvarMarkers
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import Image
 from std_msgs.msg import Header
+from neato_node.msg import Bump # BUMP
+from sensor_msgs.msg import LaserScan#BUMP
 
 x = 0
 y = 0
@@ -29,6 +31,10 @@ tf_buffer = tf2_ros.Buffer()
 x_desejado = 0.12
 y_desejado = 0.10
 z_desejado = 0.50
+
+#***********BUMP***********
+# def scaneou(dado):
+# 	print(min(dado.ranges))
 
 
 def recebe(msg):
@@ -96,6 +102,20 @@ if __name__=="__main__":
 	try:
 		# Loop principal - todo programa ROS deve ter um
 		while not rospy.is_shutdown():
+		#********BUMP**************
+		# if __name__=="__main__":
+
+		# 	rospy.init_node("aula7")
+
+		# 	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 3 )
+		# 	recebe_scan = rospy.Subscriber("/bump", Bump, scaneou)
+
+		# 	while not rospy.is_shutdown():
+		# 		print("Oeee")
+		# 		velocidade = Twist(Vector3(10, 0, 0), Vector3(0, 0, 0))
+		# 		velocidade_saida.publish(velocidade)
+		# rospy.sleep(2)
+
 			if id == 100:
 				print ("z: ",z)
 				print ("z desejado: ",z_desejado)
@@ -123,13 +143,13 @@ if __name__=="__main__":
 
 				if x_desejado < x-0.3:
 					print("Vá para direita")
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.1))
+					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 					velocidade_saida.publish(vel)
 					rospy.sleep(0.2)
 					vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 				  	velocidade_saida.publish(vel)
 				  	rospy.sleep(0.2)
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.1))
+					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 					velocidade_saida.publish(vel)
 					rospy.sleep(0.2)
 
@@ -141,13 +161,13 @@ if __name__=="__main__":
 
 				else:
 					print("Vá para esquerda")
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.1))
+					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 					velocidade_saida.publish(vel)
 					rospy.sleep(0.2)
 					vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 				  	velocidade_saida.publish(vel)
 				  	rospy.sleep(0.2)
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.1))
+					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 					velocidade_saida.publish(vel)
 					rospy.sleep(0.2)
 
@@ -157,6 +177,7 @@ if __name__=="__main__":
 				vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
 				velocidade_saida.publish(vel)
 			rospy.sleep(0.05)
+
 
 
 
