@@ -20,6 +20,10 @@ from sensor_msgs.msg import LaserScan#BUMP
 x = 0
 y = 0
 z = 0 
+ls = 0
+rs = 0
+lf = 0
+rf = 0
 
 id = 0
 
@@ -33,9 +37,17 @@ y_desejado = 0.10
 z_desejado = 0.50
 
 #***********BUMP***********
-# def scaneou(dado):
-# 	print(min(dado.ranges))
+def bateu(dado):
+	print("{} {} {} {}".format(dado.leftSide, dado.leftFront, dado.rightFront, dado.rightSide))
+	global ls
+	global rs
+	global lf
+	global rf
 
+	ls = dado.leftSide
+	rs = dado.rightSide
+	lf = dado.leftFront
+	rf = dado.rightFront
 
 def recebe(msg):
 	global x # O global impede a recriacao de uma variavel local, para podermos usar o x global ja'  declarado
@@ -102,46 +114,80 @@ if __name__=="__main__":
 	try:
 		# Loop principal - todo programa ROS deve ter um
 		while not rospy.is_shutdown():
-		#********BUMP**************
-		# if __name__=="__main__":
+			print("Oeee")
+			velocidade = Twist(Vector3(10, 0, 0), Vector3(0, 0, 0))
+			velocidade_saida.publish(velocidade)
+			rospy.sleep(2)
 
-		# 	rospy.init_node("aula7")
 
-		# 	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 3 )
-		# 	recebe_scan = rospy.Subscriber("/bump", Bump, scaneou)
+			velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 3)
+			recebe_scan = rospy.Subscriber("/bump", Bump, bateu)
+			print(recebe_scan)
 
-		# 	while not rospy.is_shutdown():
-		# 		print("Oeee")
-		# 		velocidade = Twist(Vector3(10, 0, 0), Vector3(0, 0, 0))
-		# 		velocidade_saida.publish(velocidade)
-		# rospy.sleep(2)
+			if ls == lf == rs == rf == 0:
+			#	if id == 100:
+				# 	print ("z: ",z)
+				# 	print ("z desejado: ",z_desejado)
+				# 	if z_desejado < z-0.3:
+				# 	 	print("Vá para frente")
+				# 	 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+				# 	 	velocidade_saida.publish(vel)
+				# 	 	rospy.sleep(0.05)
 
-			if id == 100:
-				print ("z: ",z)
-				print ("z desejado: ",z_desejado)
-				if z_desejado < z-0.3:
-				 	print("Vá para frente")
-				 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-				 	velocidade_saida.publish(vel)
-				 	rospy.sleep(0.05)
+				# 	elif z-0.3 <= z_desejado and z_desejado <= z+0.3:
+			 # 	 		print("Z CERTO")
+			 # 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
+			 # 	 		velocidade_saida.publish(vel)
+				# 	 	rospy.sleep(0.05)
+						 
+				# 	else:
+				# 	 	print("Vá para trás")
+				# 	 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
+				#  		velocidade_saida.publish(vel)
+				# 	 	rospy.sleep(0.05)
 
-				elif z-0.3 <= z_desejado and z_desejado <= z+0.3:
-		 	 		print("Z CERTO")
-		 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
-		 	 		velocidade_saida.publish(vel)
-				 	rospy.sleep(0.05)
-					 
+					print("Estou na área A!")
+					print ("x: ",x)
+					print ("x desejado: ",x_desejado)
+
+					if x_desejado < x-0.3:
+						print("Vá para direita")
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+						velocidade_saida.publish(vel)
+						rospy.sleep(0.2)
+						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+					  	velocidade_saida.publish(vel)
+					  	rospy.sleep(0.2)
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+						velocidade_saida.publish(vel)
+						rospy.sleep(0.2)
+
+					elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
+						print("X CERTO")
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
+			 		 	velocidade_saida.publish(vel)
+						rospy.sleep(0.05)
+
+					else:
+						print("Vá para esquerda")
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+						velocidade_saida.publish(vel)
+						rospy.sleep(0.2)
+						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+					  	velocidade_saida.publish(vel)
+					  	rospy.sleep(0.2)
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+						velocidade_saida.publish(vel)
+						rospy.sleep(0.2)
+
+
 				else:
-				 	print("Vá para trás")
-				 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
-			 		velocidade_saida.publish(vel)
-				 	rospy.sleep(0.05)
+					print("Não encontrei o marcador 100")
+					vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+					velocidade_saida.publish(vel)
+				rospy.sleep(0.05)
 
-				print("Estou na área A!")
-				print ("x: ",x)
-				print ("x desejado: ",x_desejado)
-
-				if x_desejado < x-0.3:
+			elif ls == 1:
 					print("Vá para direita")
 					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 					velocidade_saida.publish(vel)
@@ -153,34 +199,22 @@ if __name__=="__main__":
 					velocidade_saida.publish(vel)
 					rospy.sleep(0.2)
 
-				elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
-					print("X CERTO")
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
-		 		 	velocidade_saida.publish(vel)
-					rospy.sleep(0.05)
-
-				else:
-					print("Vá para esquerda")
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-					velocidade_saida.publish(vel)
-					rospy.sleep(0.2)
-					vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-				  	velocidade_saida.publish(vel)
-				  	rospy.sleep(0.2)
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-					velocidade_saida.publish(vel)
-					rospy.sleep(0.2)
-
-
+			elif rs == 1:
+						print("Vá para esquerda")
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+						velocidade_saida.publish(vel)
+						rospy.sleep(0.2)
+						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+					  	velocidade_saida.publish(vel)
+					  	rospy.sleep(0.2)
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+						velocidade_saida.publish(vel)
+						rospy.sleep(0.2)
 			else:
-				print("Não encontrei o marcador 100")
-				vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
-				velocidade_saida.publish(vel)
-			rospy.sleep(0.05)
-
-
-
-
+					 	print("Vá para trás")
+					 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
+				 		velocidade_saida.publish(vel)
+					 	rospy.sleep(0.05)
 
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
