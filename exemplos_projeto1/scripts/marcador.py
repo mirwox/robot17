@@ -18,58 +18,79 @@ from std_msgs.msg import Header
 x = 0
 y = 0
 z = 0 
-id = 0
-tfl = 0
 
-buffer = tf2_ros.Buffer()
+id = 0
+
+tfl = 0
+tf_buffer = tf2_ros.Buffer()
+#fbuffer = tf2_ros.Buffer()
 
 
 x_desejado = 0.12
 y_desejado = 0.10
-z_desejado = 1.80
+z_desejado = 0.50
+
 
 def recebe(msg):
 	global x # O global impede a recriacao de uma variavel local, para podermos usar o x global ja'  declarado
 	global y
 	global z
 	global id
-	for marker in msg.markers:
-		x = round(marker.pose.pose.position.x, 2) # para arredondar casas decimais e impressao ficar ok
-		y = round(marker.pose.pose.position.y, 2)
-		z = round(marker.pose.pose.position.z, 2)
-		#print(x)
-		id = marker.id
-		#print(marker.pose.pose)
-		if id == 100:
-			print(buffer.can_transform("base_link", "ar_marker_100", rospy.Time(0)))
-			header = Header(frame_id= "ar_marker_100")
+	global tfl
+	global tf_buffer
+	global buffer
+
+
+	frame = "head_camera" # Quando for rodar no simulador com webcam
+	frame = "camera_frame" # Quando for rodar no robo
+
+	try:
+		for marker in msg.markers:
+			id = marker.id
+			marcador = "ar_marker_" + str(id)
+
+			print(tf_buffer.can_transform(frame, marcador, rospy.Time(0)))
+			header = Header(frame_id=marcador)
 			# Procura a transformacao em sistema de coordenadas entre a base do robo e o marcador numero 100
 			# Note que para seu projeto 1 voce nao vai precisar de nada que tem abaixo, a 
 			# Nao ser que queira levar angulos em conta
-			trans = buffer.lookup_transform("base_link", "ar_marker_100", rospy.Time(0))
+			trans = tf_buffer.lookup_transform(frame, marcador, rospy.Time(0))
+			
 			# Separa as translacoes das rotacoes
-			t = transformations.translation_matrix([trans.transform.translation.x, trans.transform.translation.y, trans.transform.translation.z])
-			# Encontra as rotacoes
+			x = trans.transform.translation.x
+			y = trans.transform.translation.y
+			z = trans.transform.translation.z
+			# ATENCAO: tudo o que vem a seguir e'  so para calcular um angulo
+			# Para medirmos o angulo entre marcador e robo vamos projetar o eixo Z do marcador (perpendicular) 
+			# no eixo X do robo (que e'  a direcao para a frente)
+			t = transformations.translation_matrix([x, y, z])
+			# Encontra as rotacoes e cria uma matriz de rotacao a partir dos quaternions
 			r = transformations.quaternion_matrix([trans.transform.rotation.x, trans.transform.rotation.y, trans.transform.rotation.z, trans.transform.rotation.w])
-			m = numpy.dot(r,t)
-			v2 = numpy.dot(m,[0,0,1,0])
-			v2_n = v2[0:-1]
-			n2 = v2_n/linalg.norm(v2_n)
-			cosa = numpy.dot(n2,[1,0,0])
+			m = numpy.dot(r,t) # Criamos a matriz composta por translacoes e rotacoes
+			z_marker = [0,0,1,0] # Sao 4 coordenadas porque e'  um vetor em coordenadas homogeneas
+			v2 = numpy.dot(m, z_marker)
+			v2_n = v2[0:-1] # Descartamos a ultima posicao
+			n2 = v2_n/linalg.norm(v2_n) # Normalizamos o vetor
+			x_robo = [1,0,0]
+			cosa = numpy.dot(n2, x_robo) # Projecao do vetor normal ao marcador no x do robo
 			angulo_marcador_robo = math.degrees(math.acos(cosa))
-			print("Angulo entre marcador e robo", angulo_marcador_robo)
+
+			# Terminamos
+			print("id: {} x {} y {} z {} angulo {} ".format(id, x,y,z, angulo_marcador_robo))
+	except Exception as e:
+		print(e.stacktrace())
 
 
 if __name__=="__main__":
-	global tfl 
-	global buffer
+#	global tfl 
+#	global buffer
 
 	rospy.init_node("marcador") # Como nosso programa declara  seu nome para o sistema ROS
 
 	recebedor = rospy.Subscriber("/ar_pose_marker", AlvarMarkers, recebe) # Para recebermos notificacoes de que marcadores foram vistos
 	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1) # Para podermos controlar o robo
 
-	tfl = tf2_ros.TransformListener(buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
+	tfl = tf2_ros.TransformListener(tf_buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
 
 
 	try:
@@ -78,13 +99,13 @@ if __name__=="__main__":
 			if id == 100:
 				print ("z: ",z)
 				print ("z desejado: ",z_desejado)
-				if z_desejado < z-0.5:
+				if z_desejado < z-0.3:
 				 	print("Vá para frente")
 				 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 				 	velocidade_saida.publish(vel)
 				 	rospy.sleep(0.05)
 
-				elif z-0.5 <= z_desejado or z_desejado >= z+0.5:
+				elif z-0.3 <= z_desejado and z_desejado <= z+0.3:
 		 	 		print("Z CERTO")
 		 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 		 	 		velocidade_saida.publish(vel)
