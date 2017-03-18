@@ -4,7 +4,7 @@
 
 Mude para o diretório catkin_ws/src
 
-cd ~catkin_ws/src
+	cd ~catkin_ws/src
 
 
 Baixe o projeto pi_vision, que contém o ros2opencv, de que precisamos
@@ -31,9 +31,11 @@ Use o seguinte comando:
 
     roslaunch ros2opencv usb_cam.launch
 
-### Com um arquivo de vídeo na extensão avi:
+### Com um arquivo de vídeo:
 
-    roslaunch ros2opencv avi2ros.launch input:=ARQUIVO_DE_VIDEO.avi2ros
+    roslaunch ros2opencv avi2ros.launch input:=ARQUIVO_DE_VIDEO.avi
+
+Atenção: **não necessariamente o vídeo precisa ser na extensão avi**. Internamente o *avi2ros* usa o método [cv.cvCaptureFromFile da OpenCV](http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html)
 
 ### Rode o robô Virtual
 
