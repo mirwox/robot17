@@ -19,6 +19,7 @@ Siga os passos a seguir para testar seus programas sem ter um robô, se você es
 
 Veja [aqui mais detalhes](calibrar_camera.md) sobre como calibrar
 
+**Atenção**: no caso do robô o referencial da câmera se chama camera_frame, mas quando usamos via webcam este referencial se chama head_camera. Isso influencia no rviz e nas chamadas no código a lookupTransform para converter entre sistemas de coordenadas.
 
 ## 4. Para ver se detectou
     rostopic echo ar_pose_marker
