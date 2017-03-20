@@ -24,6 +24,9 @@ ls = 0
 rs = 0
 lf = 0
 rf = 0
+volte = False
+right = False
+left = False
 
 id = 0
 
@@ -40,45 +43,21 @@ z_desejado = 0.50
 def bateu(dado):
 	print('OLAaaa')
 	print("{} {} {} {}".format(dado.leftSide, dado.leftFront, dado.rightFront, dado.rightSide))
-	global ls
-	global rs
-	global lf
-	global rf
+	global ls, rs, lf, rf, volte, right, left
 
 	ls = dado.leftSide
 	rs = dado.rightSide
 	lf = dado.leftFront
-	rf = dado.rightFront
-	if ls == 0 and lf == 0 and rs == 0 and rf == 0:
-		print("Nao bateu")
-	elif ls == 1:
-		print("Vá para direita")
-		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-		velocidade_saida.publish(vel)
-		rospy.sleep(0.2)
-		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-	  	velocidade_saida.publish(vel)
-	  	rospy.sleep(0.2)
-		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-		velocidade_saida.publish(vel)
-		rospy.sleep(0.2)
+	rf = dado.rightFronst
 
+	if lf == 1 or rf == 1:
+		volte = True
+		
 	elif rs == 1:
-		print("Vá para esquerda")
-		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-		velocidade_saida.publish(vel)
-		rospy.sleep(0.2)
-		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-	  	velocidade_saida.publish(vel)
-	  	rospy.sleep(0.2)
-		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-		velocidade_saida.publish(vel)
-		rospy.sleep(0.2)
-	else:
-	 	print("Vá para trás")
-	 	vel = Twist(Vector3(-1, -1, 0), Vector3(0, 0, 0))
- 		velocidade_saida.publish(vel)
-	 	rospy.sleep(0.05)
+		left = True
+
+	elif ls == 1:
+	 	right = True
 
 
 def recebe(msg):
@@ -150,10 +129,8 @@ if __name__=="__main__":
 			print("Oeee")
 			velocidade = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			velocidade_saida.publish(velocidade)
-			rospy.sleep(0.1)
 
-			
-
+			if volte, right, left == False:
 
 			#	if id == 100:
 				# 	print ("z: ",z)
@@ -217,6 +194,32 @@ if __name__=="__main__":
 				# 	velocidade_saida.publish(vel)
 				# rospy.sleep(0.05)
 
+			else if volte == True:
+				print("Vá para trás")
+	 	 		vel = Twist(Vector3(-1, -1, 0), Vector3(0, 0, 0))
+ 		 		velocidade_saida.publish(vel)
+	 	 		
+
+	 	 	else if left == True:
+	 	 		print("Vá para direita")
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+				velocidade_saida.publish(vel)
+				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+	 			velocidade_saida.publish(vel)
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+				velocidade_saida.publish(vel)
+
+			else if right == True:
+				print("Vá para esquerda")
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+				velocidade_saida.publish(vel)
+				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+	 			velocidade_saida.publish(vel)
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+				velocidade_saida.publish(vel)
+
+	
+		rospy.sleep(0.1)
 
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
