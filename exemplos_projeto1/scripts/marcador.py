@@ -132,6 +132,7 @@ if __name__=="__main__":
 
 			if volte == False and right == False and left == False:
 				print("marcador")
+				rospy.sleep(0.1)
 			#	if id == 100:
 				# 	print ("z: ",z)
 				# 	print ("z desejado: ",z_desejado)
@@ -188,10 +189,11 @@ if __name__=="__main__":
 				print("Vá para trás")
 	 	 		vel = Twist(Vector3(-2, -2, 0), Vector3(0, 0, 0))
  		 		velocidade_saida.publish(vel)
- 	
- 		 		volte == False
+
+ 		 		volte = False
  		 		vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade.saida.publish(vel)
+	 	 		rospy.sleep(0.1)
 
 	 	 	elif left == True:
 	 	 		print("Vá para direita")
@@ -199,9 +201,10 @@ if __name__=="__main__":
 				velocidade_saida.publish(vel)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 	 			velocidade_saida.publish(vel)
-				left == False
+				left = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade.saida.publish(vel)
+	 	 		rospy.sleep(0.1)
 
 			elif right == True:
 				print("Vá para esquerda")
@@ -209,9 +212,10 @@ if __name__=="__main__":
 				velocidade_saida.publish(vel)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 	 			velocidade_saida.publish(vel)
-				right == False
+				right = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade.saida.publish(vel)
+	 	 		rospy.sleep(0.1)
 
 	
 			rospy.sleep(0.1)
