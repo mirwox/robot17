@@ -125,7 +125,7 @@ if __name__=="__main__":
 
 			
 
-			if ls == lf == rs == rf == 0:
+			if ls == 0 and lf == 0 and rs == 0 and rf == 0:
 				print("Nao bateu")
 				pass
 			#	if id == 100:
