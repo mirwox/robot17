@@ -70,7 +70,7 @@ def recebe(msg):
 	global buffer
 
 
-	frame = "head_camera" # Quando for rodar no simulador com webcam
+	#frame = "head_camera" # Quando for rodar no simulador com webcam
 	frame = "camera_frame" # Quando for rodar no robo
 
 	try:
@@ -187,10 +187,11 @@ if __name__=="__main__":
 
 			elif volte == True:
 				print("Vá para trás")
-	 	 		vel = Twist(Vector3(-2, -2, 0), Vector3(0, 0, 0))
+	 	 		vel = Twist(Vector3(-2, 0, 0), Vector3(0, 0, 0))
  		 		velocidade_saida.publish(vel)
 
  		 		volte = False
+ 		 		rospy.sleep(0.4)
  		 		vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade.saida.publish(vel)
 	 	 		rospy.sleep(0.1)
@@ -199,8 +200,10 @@ if __name__=="__main__":
 	 	 		print("Vá para direita")
 				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.5))
 				velocidade_saida.publish(vel)
+				rospy.sleep(0.4)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 	 			velocidade_saida.publish(vel)
+	 			rospy.sleep(0.4)
 				left = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade.saida.publish(vel)
@@ -210,8 +213,10 @@ if __name__=="__main__":
 				print("Vá para esquerda")
 				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.5))
 				velocidade_saida.publish(vel)
+				rospy.sleep(0.4)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 	 			velocidade_saida.publish(vel)
+	 			rospy.sleep(0.4)
 				right = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade.saida.publish(vel)
