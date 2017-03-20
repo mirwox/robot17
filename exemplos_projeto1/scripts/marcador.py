@@ -49,6 +49,37 @@ def bateu(dado):
 	rs = dado.rightSide
 	lf = dado.leftFront
 	rf = dado.rightFront
+	if ls == 0 and lf == 0 and rs == 0 and rf == 0:
+		print("Nao bateu")
+	elif ls == 1:
+		print("Vá para direita")
+		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+		velocidade_saida.publish(vel)
+		rospy.sleep(0.2)
+		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+	  	velocidade_saida.publish(vel)
+	  	rospy.sleep(0.2)
+		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+		velocidade_saida.publish(vel)
+		rospy.sleep(0.2)
+
+	elif rs == 1:
+		print("Vá para esquerda")
+		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+		velocidade_saida.publish(vel)
+		rospy.sleep(0.2)
+		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+	  	velocidade_saida.publish(vel)
+	  	rospy.sleep(0.2)
+		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+		velocidade_saida.publish(vel)
+		rospy.sleep(0.2)
+	else:
+	 	print("Vá para trás")
+	 	vel = Twist(Vector3(-1, -1, 0), Vector3(0, 0, 0))
+ 		velocidade_saida.publish(vel)
+	 	rospy.sleep(0.05)
+
 
 def recebe(msg):
 	global x # O global impede a recriacao de uma variavel local, para podermos usar o x global ja'  declarado
@@ -103,11 +134,12 @@ def recebe(msg):
 if __name__=="__main__":
 #	global tfl 
 #	global buffer
-
+	global velocidade_saida
 	rospy.init_node("marcador") # Como nosso programa declara  seu nome para o sistema ROS
 
 	recebedor = rospy.Subscriber("/ar_pose_marker", AlvarMarkers, recebe) # Para recebermos notificacoes de que marcadores foram vistos
-	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 1) # Para podermos controlar o robo
+	velocidade_saida = rospy.Publisher("/cmd_vel", Twist, queue_size = 3) # Para podermos controlar o robo
+	recebedor_bump = rospy.Subscriber("/bump", Bump, bateu, queue_size = 3)
 
 	tfl = tf2_ros.TransformListener(tf_buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
 	
@@ -118,16 +150,11 @@ if __name__=="__main__":
 			print("Oeee")
 			velocidade = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			velocidade_saida.publish(velocidade)
-			print("antes")
-			rospy.Subscriber("/bump", Bump, bateu, queue_size = 1)
-			print("depois")
 			rospy.sleep(0.1)
 
 			
 
-			if ls == 0 and lf == 0 and rs == 0 and rf == 0:
-				print("Nao bateu")
-				pass
+
 			#	if id == 100:
 				# 	print ("z: ",z)
 				# 	print ("z desejado: ",z_desejado)
@@ -190,34 +217,6 @@ if __name__=="__main__":
 				# 	velocidade_saida.publish(vel)
 				# rospy.sleep(0.05)
 
-			elif ls == 1:
-					print("Vá para direita")
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-					velocidade_saida.publish(vel)
-					rospy.sleep(0.2)
-					vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-				  	velocidade_saida.publish(vel)
-				  	rospy.sleep(0.2)
-					vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-					velocidade_saida.publish(vel)
-					rospy.sleep(0.2)
-
-			elif rs == 1:
-						print("Vá para esquerda")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-						velocidade_saida.publish(vel)
-						rospy.sleep(0.2)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-					  	rospy.sleep(0.2)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
-						rospy.sleep(0.2)
-			else:
-					 	print("Vá para trás")
-					 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
-				 		velocidade_saida.publish(vel)
-					 	rospy.sleep(0.05)
 
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
