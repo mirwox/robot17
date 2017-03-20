@@ -116,7 +116,7 @@ if __name__=="__main__":
 		# Loop principal - todo programa ROS deve ter um
 		while not rospy.is_shutdown():
 			print("Oeee")
-			velocidade = Twist(Vector3(10, 0, 0), Vector3(0, 0, 0))
+			velocidade = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			velocidade_saida.publish(velocidade)
 			print("antes")
 			rospy.Subscriber("/bump", Bump, bateu, queue_size = 1)
@@ -126,6 +126,7 @@ if __name__=="__main__":
 			
 
 			if ls == lf == rs == rf == 0:
+				print("Nao bateu")
 				pass
 			#	if id == 100:
 				# 	print ("z: ",z)
