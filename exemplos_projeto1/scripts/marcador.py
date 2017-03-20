@@ -48,7 +48,7 @@ def bateu(dado):
 	ls = dado.leftSide
 	rs = dado.rightSide
 	lf = dado.leftFront
-	rf = dado.rightFronst
+	rf = dado.rightFront
 
 	if lf == 1 or rf == 1:
 		volte = True
@@ -130,8 +130,8 @@ if __name__=="__main__":
 			velocidade = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			velocidade_saida.publish(velocidade)
 
-			if volte, right, left == False:
-
+			if volte == False and right == False and left == False:
+				print("marcador")
 			#	if id == 100:
 				# 	print ("z: ",z)
 				# 	print ("z desejado: ",z_desejado)
@@ -139,19 +139,16 @@ if __name__=="__main__":
 				# 	 	print("Vá para frente")
 				# 	 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 				# 	 	velocidade_saida.publish(vel)
-				# 	 	rospy.sleep(0.05)
 
 				# 	elif z-0.3 <= z_desejado and z_desejado <= z+0.3:
 			 # 	 		print("Z CERTO")
 			 # 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 # 	 		velocidade_saida.publish(vel)
-				# 	 	rospy.sleep(0.05)
 						 
 				# 	else:
 				# 	 	print("Vá para trás")
 				# 	 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
 				#  		velocidade_saida.publish(vel)
-				# 	 	rospy.sleep(0.05)
 
 				# 	print("Estou na área A!")
 				# 	print ("x: ",x)
@@ -161,65 +158,63 @@ if __name__=="__main__":
 				# 		print("Vá para direita")
 				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 				# 		velocidade_saida.publish(vel)
-				# 		rospy.sleep(0.2)
 				# 		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 				# 	  	velocidade_saida.publish(vel)
-				# 	  	rospy.sleep(0.2)
 				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 				# 		velocidade_saida.publish(vel)
-				# 		rospy.sleep(0.2)
 
 				# 	elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
 				# 		print("X CERTO")
 				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 # 		 	velocidade_saida.publish(vel)
-				# 		rospy.sleep(0.05)
 
 				# 	else:
 				# 		print("Vá para esquerda")
 				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 				# 		velocidade_saida.publish(vel)
-				# 		rospy.sleep(0.2)
 				# 		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 				# 	  	velocidade_saida.publish(vel)
-				# 	  	rospy.sleep(0.2)
 				# 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 				# 		velocidade_saida.publish(vel)
-				# 		rospy.sleep(0.2)
 
 
 				# else:
 				# 	print("Não encontrei o marcador 100")
 				# 	vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
 				# 	velocidade_saida.publish(vel)
-				# rospy.sleep(0.05)
 
-			else if volte == True:
+
+			elif volte == True:
 				print("Vá para trás")
-	 	 		vel = Twist(Vector3(-1, -1, 0), Vector3(0, 0, 0))
+	 	 		vel = Twist(Vector3(-2, -2, 0), Vector3(0, 0, 0))
  		 		velocidade_saida.publish(vel)
-	 	 		
+ 	
+ 		 		volte == False
+ 		 		vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
+	 	 		velocidade.saida.publish(vel)
 
-	 	 	else if left == True:
+	 	 	elif left == True:
 	 	 		print("Vá para direita")
-				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.5))
 				velocidade_saida.publish(vel)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 	 			velocidade_saida.publish(vel)
-				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-				velocidade_saida.publish(vel)
+				left == False
+				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
+	 	 		velocidade.saida.publish(vel)
 
-			else if right == True:
+			elif right == True:
 				print("Vá para esquerda")
-				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.5))
 				velocidade_saida.publish(vel)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 	 			velocidade_saida.publish(vel)
-				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-				velocidade_saida.publish(vel)
+				right == False
+				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
+	 	 		velocidade.saida.publish(vel)
 
 	
-		rospy.sleep(0.1)
+			rospy.sleep(0.1)
 
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
