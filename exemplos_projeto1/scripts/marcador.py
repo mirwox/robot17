@@ -140,16 +140,19 @@ if __name__=="__main__":
 					 	print("Vá para frente")
 					 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 					 	velocidade_saida.publish(vel)
+					 	
 
 					elif z-0.3 <= z_desejado and z_desejado <= z+0.3:
 			 	 		print("Z CERTO")
 			 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 	 		velocidade_saida.publish(vel)
-						 
+						
+
 					else:
 					 	print("Vá para trás")
 					 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
 				 		velocidade_saida.publish(vel)
+				 		
 
 					print("Estou na área A!")
 					print ("x: ",x)
@@ -163,11 +166,13 @@ if __name__=="__main__":
 					  	velocidade_saida.publish(vel)
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 						velocidade_saida.publish(vel)
+						
 
 					elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
 						print("X CERTO")
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 		 	velocidade_saida.publish(vel)
+			 		 	
 
 					else:
 						print("Vá para esquerda")
@@ -177,6 +182,7 @@ if __name__=="__main__":
 					  	velocidade_saida.publish(vel)
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 						velocidade_saida.publish(vel)
+						
 
 
 				else:
@@ -193,7 +199,7 @@ if __name__=="__main__":
  		 		volte = False
  		 		rospy.sleep(0.4)
  		 		vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
-	 	 		velocidade.saida.publish(vel)
+	 	 		velocidade_saida.publish(vel)
 	 	 		rospy.sleep(0.1)
 
 	 	 	elif left == True:
@@ -206,7 +212,7 @@ if __name__=="__main__":
 	 			rospy.sleep(0.4)
 				left = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
-	 	 		velocidade.saida.publish(vel)
+	 	 		velocidade_saida.publish(vel)
 	 	 		rospy.sleep(0.1)
 
 			elif right == True:
@@ -219,11 +225,13 @@ if __name__=="__main__":
 	 			rospy.sleep(0.4)
 				right = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
-	 	 		velocidade.saida.publish(vel)
+	 	 		velocidade_saida.publish(vel)
 	 	 		rospy.sleep(0.1)
 
 	
 			rospy.sleep(0.1)
-
+			z = 0 
+			x = 0
+			
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
