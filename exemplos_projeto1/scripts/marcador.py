@@ -154,20 +154,14 @@ if __name__=="__main__":
 						print("Vá para direita")
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 						velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
+					
 
 
 					elif x_desejado > x+0.3:
 						print("Vá para esquerda")
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 						velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
+				
 
 
 					else:
