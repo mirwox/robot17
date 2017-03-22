@@ -133,20 +133,42 @@ if __name__=="__main__":
 			if volte == False and right == False and left == False:
 				print("marcador")
 				rospy.sleep(0.1)
+
 				if id == 100:
 					print ("z: ",z)
 					print ("z desejado: ",z_desejado)
-					if z_desejado < z-0.3:
+					if z_desejado < z-0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
+						print("X CERTO")
 					 	print("Vá para frente")
 					 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 					 	velocidade_saida.publish(vel)
 					 	
 
-					elif z-0.3 <= z_desejado and z_desejado <= z+0.3:
+					elif z-0.3 <= z_desejado and z_desejado <= z+0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
 			 	 		print("Z CERTO")
+			 	 		print("X CERTO")
 			 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 	 		velocidade_saida.publish(vel)
-						
+
+			 	 	elif x_desejado < x-0.3:
+						print("Vá para direita")
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+						velocidade_saida.publish(vel)
+						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+					  	velocidade_saida.publish(vel)
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+						velocidade_saida.publish(vel)
+
+
+					elif x_desejado > x+0.3:
+						print("Vá para esquerda")
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+						velocidade_saida.publish(vel)
+						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+					  	velocidade_saida.publish(vel)
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
+						velocidade_saida.publish(vel)
+
 
 					else:
 					 	print("Vá para trás")
@@ -158,36 +180,10 @@ if __name__=="__main__":
 					print ("x: ",x)
 					print ("x desejado: ",x_desejado)
 
-					if x_desejado < x-0.3:
-						print("Vá para direita")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-						velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
-						
-
-					elif x-0.3 <= x_desejado and x_desejado >= x+0.3:
-						print("X CERTO")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
-			 		 	velocidade_saida.publish(vel)
-			 		 	
-
-					else:
-						print("Vá para esquerda")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
-						velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
-					  	velocidade_saida.publish(vel)
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
-						velocidade_saida.publish(vel)
-						
-
 
 				else:
-					print("Não encontrei o marcador 100")
-					vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+					print("Não encontrei o marcador 100: procurando")
+					vel = Twist(Vector3(0,0,0), Vector3(0,0,-0.2))
 					velocidade_saida.publish(vel)
 
 
@@ -232,6 +228,6 @@ if __name__=="__main__":
 			rospy.sleep(0.1)
 			z = 0 
 			x = 0
-			
+
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
