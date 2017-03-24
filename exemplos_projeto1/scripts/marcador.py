@@ -151,6 +151,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 					 	rospy.sleep(default_sleep)
+					 	print("										ID VOLTA A 0, id = " + id)
 
 					elif z-0.3 <= z_desejado and z_desejado <= z+0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
 			 	 		print("Z CERTO")
@@ -161,6 +162,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 			 	 		rospy.sleep(default_sleep)
+			 	 		print("										ID VOLTA A 0, id = " + id)
 
 			 	 	elif x_desejado < x-0.3:
 						print("Vá para direita")
@@ -170,6 +172,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 						rospy.sleep(default_sleep)
+						print("										ID VOLTA A 0, id = " + id)
 
 
 					elif x_desejado > x+0.3:
@@ -180,9 +183,10 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 						rospy.sleep(default_sleep)
+						print("										ID VOLTA A 0, id = " + id)
 
 
-					else:
+					elif z_desejado > z + 0.3:
 					 	print("Vá para trás")
 					 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
 				 		velocidade_saida.publish(vel)
@@ -192,6 +196,15 @@ if __name__=="__main__":
 			 	 		rospy.sleep(default_sleep)
 			 	 		print("										ID VOLTA A 0, id = " + id)
 
+			 	 	else:
+			 	 		print("Nao sei o que fazer mas pra estou vendo o marcador")
+			 	 		vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
+					 	velocidade_saida.publish(vel)
+					 	id = 0
+					 	x = 0
+					 	z = 0
+					 	rospy.sleep(default_sleep)
+					 	print("										ID VOLTA A 0, id = " + id)
 			 	 		
 				 	
 
