@@ -142,6 +142,7 @@ if __name__=="__main__":
 					 	print("Vá para frente")
 					 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 					 	velocidade_saida.publish(vel)
+					 	rospy.sleep(0.1)
 					 	
 
 					elif z-0.3 <= z_desejado and z_desejado <= z+0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
@@ -149,26 +150,29 @@ if __name__=="__main__":
 			 	 		print("X CERTO")
 			 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 	 		velocidade_saida.publish(vel)
+			 	 		rospy.sleep(0.1)
 
 			 	 	elif x_desejado < x-0.3:
 						print("Vá para direita")
-						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
+						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 						velocidade_saida.publish(vel)
-					
+						rospy.sleep(0.1)
 
 
 					elif x_desejado > x+0.3:
 						print("Vá para esquerda")
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 						velocidade_saida.publish(vel)
-				
+						rospy.sleep(0.1)
 
 
 					else:
 					 	print("Vá para trás")
 					 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
 				 		velocidade_saida.publish(vel)
-				 		
+			 	 		rospy.sleep(0.1)
+			 	 		pass
+				 	
 
 					print("Estou na área A!")
 					print ("x: ",x)
@@ -183,7 +187,7 @@ if __name__=="__main__":
 
 			elif volte == True:
 				print("Vá para trás")
-	 	 		vel = Twist(Vector3(-2, 0, 0), Vector3(0, 0, 0))
+	 	 		vel = Twist(Vector3(-1, 0, 0), Vector3(0, 0, 0))
  		 		velocidade_saida.publish(vel)
 
  		 		volte = False
@@ -194,7 +198,7 @@ if __name__=="__main__":
 
 	 	 	elif left == True:
 	 	 		print("Vá para direita")
-				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.5))
+				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.5))
 				velocidade_saida.publish(vel)
 				rospy.sleep(0.4)
 				vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
