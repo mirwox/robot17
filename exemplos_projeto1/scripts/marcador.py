@@ -135,7 +135,7 @@ if __name__=="__main__":
 
 
 			if volte == False and right == False and left == False:
-				print("marcador")
+				print("marcador", espera)
 				rospy.sleep(default_sleep)
 
 				if id == 100:
@@ -214,8 +214,8 @@ if __name__=="__main__":
 
 
 				else:
-					if espera < 20:
-						print("Não encontrei o marcador 100: esperando")
+					if espera < 100:
+						print("Não encontrei o marcador 100: esperando", espera)
 						vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
 						velocidade_saida.publish(vel)
 						x = 0
@@ -224,7 +224,7 @@ if __name__=="__main__":
 						rospy.sleep(default_sleep)
 
 					else:
-						print("Não encontrei o marcador 100: PROCURANDO")
+						print("Não encontrei o marcador 100: PROCURANDO", espera)
 						vel = Twist(Vector3(0,0,0), Vector3(0,0,0.2))
 						velocidade_saida.publish(vel)
 						x = 0
