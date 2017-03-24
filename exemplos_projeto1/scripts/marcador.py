@@ -123,7 +123,7 @@ if __name__=="__main__":
 
 	tfl = tf2_ros.TransformListener(tf_buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
 	
-	default_sleep = 0.15
+	default_sleep = 0.015
 
 	try:
 		# Loop principal - todo programa ROS deve ter um
@@ -234,6 +234,7 @@ if __name__=="__main__":
 
 
 			elif volte == True:
+				espera = 0
 				print("Vá para trás")
 	 	 		vel = Twist(Vector3(-1, 0, 0), Vector3(0, 0, 0))
  		 		velocidade_saida.publish(vel)
@@ -246,6 +247,7 @@ if __name__=="__main__":
 	 	 		rospy.sleep(default_sleep)
 
 	 	 	elif left == True:
+	 	 		espera = 0
 	 	 		print("Vá para direita")
 				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.5))
 				velocidade_saida.publish(vel)
@@ -259,6 +261,7 @@ if __name__=="__main__":
 	 	 		rospy.sleep(default_sleep)
 
 			elif right == True:
+				espera = 0
 				print("Vá para esquerda")
 				vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.5))
 				velocidade_saida.publish(vel)
