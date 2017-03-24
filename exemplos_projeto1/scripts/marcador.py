@@ -123,7 +123,7 @@ if __name__=="__main__":
 
 	tfl = tf2_ros.TransformListener(tf_buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
 	
-	default_sleep = 0.6
+	default_sleep = 0.15
 
 	try:
 		# Loop principal - todo programa ROS deve ter um
@@ -151,7 +151,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 					 	rospy.sleep(default_sleep)
-					 	print("										ID VOLTA A 0, id = " + id)
+					 	print("										ID VOLTA A 0, id = ")
 
 					elif z-0.3 <= z_desejado and z_desejado <= z+0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
 			 	 		print("Z CERTO")
@@ -162,7 +162,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 			 	 		rospy.sleep(default_sleep)
-			 	 		print("										ID VOLTA A 0, id = " + id)
+			 	 		print("										ID VOLTA A 0, id = ")
 
 			 	 	elif x_desejado < x-0.3:
 						print("Vá para direita")
@@ -172,7 +172,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 						rospy.sleep(default_sleep)
-						print("										ID VOLTA A 0, id = " + id)
+						print("										ID VOLTA A 0, id = ")
 
 
 					elif x_desejado > x+0.3:
@@ -183,7 +183,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 						rospy.sleep(default_sleep)
-						print("										ID VOLTA A 0, id = " + id)
+						print("										ID VOLTA A 0, id = ")
 
 
 					elif z_desejado > z + 0.3:
@@ -194,7 +194,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 			 	 		rospy.sleep(default_sleep)
-			 	 		print("										ID VOLTA A 0, id = " + id)
+			 	 		print("										ID VOLTA A 0, id = ")
 
 			 	 	else:
 			 	 		print("Nao sei o que fazer mas pra estou vendo o marcador")
@@ -204,7 +204,7 @@ if __name__=="__main__":
 					 	x = 0
 					 	z = 0
 					 	rospy.sleep(default_sleep)
-					 	print("										ID VOLTA A 0, id = " + id)
+					 	print("										ID VOLTA A 0, id = ")
 			 	 		
 				 	
 
@@ -214,22 +214,22 @@ if __name__=="__main__":
 
 
 				else:
-					if espera < 21:
+					if espera < 20:
 						print("Não encontrei o marcador 100: esperando")
 						vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
 						velocidade_saida.publish(vel)
 						x = 0
 						z = 0
-						espera =+ 1
+						espera += 1
 						rospy.sleep(default_sleep)
 
 					else:
 						print("Não encontrei o marcador 100: PROCURANDO")
-						vel = Twist(Vector3(0,0,0), Vector3(0,0,5))
+						vel = Twist(Vector3(0,0,0), Vector3(0,0,0.2))
 						velocidade_saida.publish(vel)
 						x = 0
 						z = 0
-						espera =+ 1
+						espera += 1
 						rospy.sleep (default_sleep)
 
 
