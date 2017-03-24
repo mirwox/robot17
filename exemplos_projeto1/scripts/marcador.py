@@ -27,6 +27,7 @@ rf = 0
 volte = False
 right = False
 left = False
+espera = 0
 
 id = 0
 
@@ -122,6 +123,7 @@ if __name__=="__main__":
 
 	tfl = tf2_ros.TransformListener(tf_buffer) # Para fazer conversao de sistemas de coordenadas - usado para calcular angulo
 	
+	default_sleep = 0.6
 
 	try:
 		# Loop principal - todo programa ROS deve ter um
@@ -130,11 +132,14 @@ if __name__=="__main__":
 			velocidade = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			velocidade_saida.publish(velocidade)
 
+
+
 			if volte == False and right == False and left == False:
 				print("marcador")
-				rospy.sleep(0.1)
+				rospy.sleep(default_sleep)
 
 				if id == 100:
+					espera = 0
 					print ("z: ",z)
 					print ("z desejado: ",z_desejado)
 					if z_desejado < z-0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
@@ -142,36 +147,52 @@ if __name__=="__main__":
 					 	print("Vá para frente")
 					 	vel = Twist(Vector3(0.5, 0, 0), Vector3(0, 0, 0))
 					 	velocidade_saida.publish(vel)
-					 	rospy.sleep(0.1)
-					 	
+					 	id = 0
+					 	x = 0
+					 	z = 0
+					 	rospy.sleep(default_sleep)
 
 					elif z-0.3 <= z_desejado and z_desejado <= z+0.3 and x-0.3 <= x_desejado and x_desejado >= x+0.3:
 			 	 		print("Z CERTO")
 			 	 		print("X CERTO")
 			 	 		vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
 			 	 		velocidade_saida.publish(vel)
-			 	 		rospy.sleep(0.1)
+					 	id = 0
+					 	x = 0
+					 	z = 0
+			 	 		rospy.sleep(default_sleep)
 
 			 	 	elif x_desejado < x-0.3:
 						print("Vá para direita")
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0.2))
 						velocidade_saida.publish(vel)
-						rospy.sleep(0.1)
+					 	id = 0
+					 	x = 0
+					 	z = 0
+						rospy.sleep(default_sleep)
 
 
 					elif x_desejado > x+0.3:
 						print("Vá para esquerda")
 						vel = Twist(Vector3(0, 0, 0), Vector3(0, 0, -0.2))
 						velocidade_saida.publish(vel)
-						rospy.sleep(0.1)
+					 	id = 0
+					 	x = 0
+					 	z = 0
+						rospy.sleep(default_sleep)
 
 
 					else:
 					 	print("Vá para trás")
 					 	vel = Twist(Vector3(-0.5, 0, 0), Vector3(0, 0, 0))
 				 		velocidade_saida.publish(vel)
-			 	 		rospy.sleep(0.1)
-			 	 		pass
+					 	id = 0
+					 	x = 0
+					 	z = 0
+			 	 		rospy.sleep(default_sleep)
+			 	 		print("										ID VOLTA A 0, id = " + id)
+
+			 	 		
 				 	
 
 					print("Estou na área A!")
@@ -180,9 +201,23 @@ if __name__=="__main__":
 
 
 				else:
-					print("Não encontrei o marcador 100: procurando")
-					vel = Twist(Vector3(0,0,0), Vector3(0,0,-0.2))
-					velocidade_saida.publish(vel)
+					if espera < 21:
+						print("Não encontrei o marcador 100: esperando")
+						vel = Twist(Vector3(0,0,0), Vector3(0,0,0))
+						velocidade_saida.publish(vel)
+						x = 0
+						z = 0
+						espera =+ 1
+						rospy.sleep(default_sleep)
+
+					else:
+						print("Não encontrei o marcador 100: PROCURANDO")
+						vel = Twist(Vector3(0,0,0), Vector3(0,0,5))
+						velocidade_saida.publish(vel)
+						x = 0
+						z = 0
+						espera =+ 1
+						rospy.sleep (default_sleep)
 
 
 			elif volte == True:
@@ -190,11 +225,12 @@ if __name__=="__main__":
 	 	 		vel = Twist(Vector3(-1, 0, 0), Vector3(0, 0, 0))
  		 		velocidade_saida.publish(vel)
 
+
  		 		volte = False
  		 		rospy.sleep(0.4)
  		 		vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade_saida.publish(vel)
-	 	 		rospy.sleep(0.1)
+	 	 		rospy.sleep(default_sleep)
 
 	 	 	elif left == True:
 	 	 		print("Vá para direita")
@@ -207,7 +243,7 @@ if __name__=="__main__":
 				left = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade_saida.publish(vel)
-	 	 		rospy.sleep(0.1)
+	 	 		rospy.sleep(default_sleep)
 
 			elif right == True:
 				print("Vá para esquerda")
@@ -220,12 +256,10 @@ if __name__=="__main__":
 				right = False
 				vel = Twist(Vector3(0,0,0),Vector3(0,0,0))
 	 	 		velocidade_saida.publish(vel)
-	 	 		rospy.sleep(0.1)
+	 	 		rospy.sleep(default_sleep)
 
 	
-			rospy.sleep(0.1)
-			z = 0 
-			x = 0
+			rospy.sleep(default_sleep)
 
 	except rospy.ROSInterruptException:
 		print("Ocorreu uma exceção com o rospy")
