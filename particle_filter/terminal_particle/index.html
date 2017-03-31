@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title> Visualização do Exercício da Aula 01/04.</title>
+    <script src="brython/brython.js"></script>
+    <style>
+.parede {
+    background-color: #333333;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #333333;
+}
+
+.chao {
+    background-color: #DDDDDD;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #DDDDDD;
+}
+
+.robo {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+    </style>
+
+</head>
+<body onload="brython();">
+    <table>
+        <tr>
+            <td>Mapa:</td>
+            <td>Posição do robô</td>
+        </tr>
+        <tr>
+            <td><textarea id='mapa' style="width: 100px; height: 100px;">###########
+#  #      #
+#      #  #
+###########</textarea></td>
+            <td><input type="text" id="robo" value="1,2"/></td>
+        </tr>
+    </table>
+    
+    <p>
+        <button id="iniciar">Iniciar Visualização</button>
+        <button id="U">Up</button>
+        <button id="D">Down</button>
+        <button id="W">Left</button>
+        <button id="E">Right</button>
+    </p>
+
+    <table>
+        <tr>
+            <td>Mapa</td>
+            <td>Partículas</td>
+        <tr>
+            <td>
+                <table id="mapa_viz">
+                </table>
+            </td>
+            <td>
+                <table id="mapa_probs">
+                </table>
+            </td>
+    </table>
+    Quanto mais vermelha a partícula maior sua probabilidade.
+
+    
+    <!--<div style="height: 100px; width: 30px; background: linear-gradient(#FF0000, #0000FF);">
+    </div>-->
+    <script type="text/python" src="html5_viz.py"></script>
+</body>
+</html>

@@ -1,8 +1,6 @@
 # coding: utf8
 #import browser
 
-__author__      = "Igor D S Montagner"
-
 def cria_particulas(mapa):
     '''
     Cria uma partícula para cada posição vazia no grid. 
@@ -111,15 +109,6 @@ def atualiza_prob_H(mapa, particulas, robo):
     return particulas
 
 def loop_principal_console():
-
-    intro = """
-Use as teclas I,J,K,L ou W, E, U, D para movimentar o robô
-o --- robô
-+ --- posições mais prováveis
-    """
-
-    print(intro)
-
     mapa = \
     '''
 ###########
@@ -138,14 +127,13 @@ o --- robô
         mostra_particulas(particulas)
         print('-----------------------')
         movimento = input('Movimento do robo: ')
-        movimento = movimento.upper()
-        if movimento == 'U' or movimento == 'I':
+        if movimento == 'U':
             delta = (-1, 0)
-        elif movimento == 'D' or movimento == 'K':
+        elif movimento == 'D':
             delta = (+1, 0)
-        elif movimento == 'W' or movimento == 'J':
+        elif movimento == 'W':
             delta = (0, -1)
-        elif movimento == 'E' or movimento == 'L':
+        elif movimento == 'E':
             delta = (0, +1)
         else:
             delta = (0, 0)
