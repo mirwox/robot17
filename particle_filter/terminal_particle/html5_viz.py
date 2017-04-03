@@ -1,5 +1,5 @@
 import browser
-from browser import html
+from browser import html, window
 import simple_particle
 
 simulacao_atual = {}
@@ -53,6 +53,8 @@ def inicia_visualizacao(ev):
     mapa = mapa.split('\n')
     particulas = simple_particle.cria_particulas(mapa)
     simple_particle.mostra_mapa(mapa, robo, particulas)
+
+    window.jQuery('ul.tabs').tabs('select_tab', 'viz')
 
     cria_tabela(mapa, 'mapa_viz')
     cria_tabela(mapa, 'mapa_probs')
