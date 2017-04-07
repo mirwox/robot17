@@ -121,14 +121,14 @@ def nb_initialize_particle_cloud(xy_theta=None):
     update_robot_pose(particle_cloud, np.ones(len(particle_cloud)))    
     return particle_cloud
     
-def nb_create_particles(pose, var_x = 100, var_y = 100, var_theta = 2*math.pi, num=60):
+def nb_create_particles(n_part, minx, miny, maxx, maxy, var_x = 50, var_y = 50, var_theta = math.pi/3):
     """
         Cria num particulas
         situadas no intervalo x - var_x a x + var_x, y - var_x at'e y + var_y e theta - var_theta a theta + var_theta
     """
     particle_cloud = []
     s = pose
-    for i in range(num):
+    for i in range(n_part):
         x = random.uniform(s[0] - var_x, s[0] + var_x)
         y = random.uniform(s[1] - var_x, s[1] + var_y)
         theta = random.uniform(s[2] - var_theta, s[2] + var_theta)
@@ -245,8 +245,8 @@ def nb_simulate_lidar(robot_pose, angles, img):
     y0 = robot_pose[1]
     
     for angulo in a:
-        # Faz o angulo ser relativo ao robo
         ang = robot_pose[theta]+angulo
+        # Faz o angulo ser relativo ao robo
         #print("Angle ", ang)
         xa, ya = x0, y0
         x = xa
