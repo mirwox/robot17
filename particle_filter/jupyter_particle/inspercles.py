@@ -1,3 +1,4 @@
+# coding: utf-8
 from random import randint, choice
 import time
 import matplotlib.pyplot as plt
@@ -10,7 +11,7 @@ from nav_msgs.msg import OccupancyGrid
 from occupancy_field import OccupancyField
 from helper_functions import angle_normalize, angle_diff
 
-
+particle_size = 7
 
 def convert_to_figure(xy_theta):
     """ 
@@ -20,6 +21,15 @@ def convert_to_figure(xy_theta):
 
 
 def nb_draw_map(mapa_numpy, particles = None, initial_position=False, pose=False, robot=False):
+    """
+        particles - um conjunto de partículas definidas como objetos do tipo partícula
+
+        initial_position - cor para desenhar a posição inicial do robo
+
+        pose - pose do robo
+
+        robot - booleano que determina se o robô é desenhado como um círculo ou não
+    """
     fig, ax = plt.subplots(figsize=(10,10))
     ax.set(xlim=[0, width], ylim=[0, height]) # Or use "ax.axis([x0,x1,y0,y1])"
 
@@ -36,7 +46,7 @@ def nb_draw_map(mapa_numpy, particles = None, initial_position=False, pose=False
         nb_draw_arrow(pose[0], pose[1], pose[2], ax, color='g', width=2, headwidth=6, headlength=6)
     if robot:
         nb_draw_robot(pose, ax, radius=robot_radius)
-    
+
     return ax # Retornamos o contexto grafico caso queiram fazer algo depois
 
         
@@ -55,6 +65,11 @@ def draw_initial_pose(pose_xytheta, ax):
     nb_draw_arrow(x, y, theta, ax, l=l, color='r', width=2, headwidth=6, headlength=6)
     
 def nb_draw_arrow(x, y, theta, ax, l = 15, color='y', headwidth=3.0, headlength=3, width=0.001):
+    """
+        Desenha uma seta na posição x, y com um ângulo theta
+        ax é o contexto gráfico
+
+    """
     deltax = l*math.cos(theta)
     deltay = l*math.sin(theta)
     ax.arrow(x, y, deltax, deltay, head_width=headwidth, head_length=headlength, fc=color,  ec=color, width=width)
@@ -68,7 +83,8 @@ def nb_draw_particle_cloud(particles, ax):
     for p in particles:
         nb_draw_arrow(p.x, p.y, p.theta, ax, particle_size, color='b')
 
-def normalize_particles():
+def normalize_particles(particle_cloud):
+    # 
     #global particle_cloud
     w_sum = 0
     for p in particle_cloud:
@@ -76,24 +92,24 @@ def normalize_particles():
     for p in particle_cloud:
         p.normalize(w_sum)
 
-def update_robot_pose():
-    """ Update the estimate of the robot's pose given the updated particles.
-        There are two logical methods for this:
-            (1): compute the mean pose
-            (2): compute the most likely pose (i.e. the mode of the distribution)
-    """
-    # first make sure that the particle weights are normalized
-    normalize_particles()
+def update_robot_pose(particle_cloud, W):
+    """ 
+        O objetivo deste item é fornecer uma estimativa da pose do robo
 
-    # TODO: assign the lastest pose into self.robot_pose as a geometry_msgs.Pose object
-    # Nota: neste notebook ao inves de usarmos um objeto Pose vou usar uma lista x, y, theta
+        Pode-se escolher como isto é feito.
+
+        Por exemplo:
+            Usar a média de todas as partículas
+            Usar as partículas mais provaveis
+    """
     robot_pose = [0, 0, 0]
+    return robot_pose
         
 def nb_initialize_particle_cloud(xy_theta=None):
     """ Initialize the particle cloud.
         Arguments
         xy_theta: a triple consisting of the mean x, y, and theta (yaw) to initialize the
-                  particle cloud around.  If this input is ommitted, the odometry will be used """
+                  particle cloud around.  """
     if xy_theta == None:
         #xy_theta = convert_pose_to_xy_and_theta(.odom_pose.pose)
         pass
@@ -101,8 +117,9 @@ def nb_initialize_particle_cloud(xy_theta=None):
     # TODO create particles
     particle_cloud = nb_create_particles(initial_pose)
         
-    normalize_particles()
-    update_robot_pose()    
+    normalize_particles(particle_cloud)
+    update_robot_pose(particle_cloud, np.ones(len(particle_cloud)))    
+    return particle_cloud
     
 def nb_create_particles(pose, var_x = 50, var_y = 50, var_theta = math.pi/3, num=30):
     """
@@ -120,6 +137,9 @@ def nb_create_particles(pose, var_x = 50, var_y = 50, var_theta = math.pi/3, num
     return particle_cloud
 
 def nb_draw_robot(position, ax, radius=10):
+    """
+        Desenha um círculo com uma seta para se passar pelo robô
+    """
     from matplotlib.patches import Circle
     circle = Circle((position[0], position[1]), radius, facecolor='none',
                     edgecolor=(0.0, 0.8, 0.2), linewidth=2, alpha=0.7)
@@ -171,9 +191,9 @@ def nb_cria_occupancy_field_image(occupancy_field, numpy_image):
 
 def nb_outside_image(x, y, img):
     if x > img.shape[1] or x < 0:
-        return true
+        return True
     if y > img.shape[0] or y < 0:
-        return ture
+        return True
 
 def nb_found_obstacle(x, y, x0, y0, img):
     gray_value = 1.0 - img[x][y]/255.0
@@ -183,6 +203,9 @@ def nb_found_obstacle(x, y, x0, y0, img):
         
     
 def nb_find_discrete_line_versor(xa, ya, angle):
+    """
+        Encontra a direção para a qual o sensor laser do robô no ângulo angle aponta
+    """
     m = math.tan(angle)
     delta = 50.0 # arbitrario
     xd = xa + delta*math.cos(angle)
@@ -247,5 +270,9 @@ def nb_simulate_lidar(robot_pose, angles, img):
             # Keep going if none of the "ifs" has been triggered
             x += vers[0]
             y += vers[1]
+
+            if y > img.shape[0] or x > img.shape[1]:
+                break
+
             
     return lidar_results, result_img
