@@ -4,7 +4,7 @@
 Faça um git pull no robot17
 
 
-    roslaunch projeto2 server_with_map_and_gui_plus_robot.launch
+    roslaunch projeto2 server_with_map_and_gui.launch
 
     roslaunch stdr_launchers rviz.launch
 
