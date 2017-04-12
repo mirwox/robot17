@@ -258,13 +258,13 @@ def nb_simulate_lidar(robot_pose, angles, img):
             result_img[int(y), int(x)] = 0 # Marcamos o raio na imagem y,x porque numpy e' linha, coluna
             if nb_outside_image(int(x), int(y), img):
                 # A imagem acabou, nao achamos nada
-                lidar_results[ang] = float('Inf')
+                lidar_results[angulo] = float("Inf")
                 print("Outside at ",x ,"  ",y, "  for angle ", ang)
                 break
             dist = nb_found_obstacle(int(y), int(x), y0, x0, img)
             if dist > -1:   
                 # Achamos alguma coisa
-                lidar_results[ang] = dist 
+                lidar_results[angulo] = dist 
                 #print("Hit for ",x,  "  ",y, "  for angle ", ang)                
                 break
             # Keep going if none of the "ifs" has been triggered
