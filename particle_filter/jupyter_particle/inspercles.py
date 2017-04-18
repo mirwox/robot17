@@ -198,7 +198,7 @@ def nb_outside_image(x, y, img):
 def nb_found_obstacle(x, y, x0, y0, img):
     gray_value = 1.0 - img[x][y]/255.0
     if gray_value > free_thresh and gray_value < occupied_thresh:
-        return math.sqrt( (x0 - x)**2 + (y0 - x)**2 )
+        return math.sqrt( (x0 - x)**2 + (y0 - y)**2 )
 
         
     
