@@ -12,7 +12,7 @@ Basta usar o comando nbdiff-web
 
 O resultado deve ser como a tela abaixo, que mostra de forma visual a diferença 
 
-![compare_notebooks_nbdiff_web.png]
+![Comando nbdiff-web em execução](compare_notebooks_nbdiff_web.png)
 
 
 Experimente também os comandos:
