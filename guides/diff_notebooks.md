@@ -17,6 +17,6 @@ O resultado deve ser como a tela abaixo, que mostra de forma visual a diferença
 
 Experimente também os comandos:
 
-*.nbdiff - mostra a diferença entre dois notebooks no terminal
-*.nbmerge - ajuda a fazer o merge entre dois notebooks no terminal
-*.nbmerge-web - ajudar a fazer o merge entre dois notebooks no browser
+* nbdiff - mostra a diferença entre dois notebooks no terminal
+* nbmerge - ajuda a fazer o merge entre dois notebooks no terminal
+* nbmerge-web - ajudar a fazer o merge entre dois notebooks no browser
