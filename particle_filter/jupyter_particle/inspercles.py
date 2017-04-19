@@ -190,9 +190,9 @@ def nb_cria_occupancy_field_image(occupancy_field, numpy_image):
 
 
 def nb_outside_image(x, y, img):
-    if x > img.shape[1] or x < 0:
+    if x >= img.shape[1] or x < 0:
         return True
-    if y > img.shape[0] or y < 0:
+    if y >= img.shape[0] or y < 0:
         return True
 
 def nb_found_obstacle(x, y, x0, y0, img):
@@ -222,7 +222,7 @@ def nb_find_discrete_line_versor(xa, ya, angle):
     
 
 
-def nb_simulate_lidar(robot_pose, angles, img):
+def nb_simulate_lidar(robot_pose, angles, img, retorno = None, output_image=True):
     """
         Simula a leitura `real` do LIDAR supondo que o robot esteja na robot_pose e com sensores nos angulos angles
         
@@ -238,18 +238,27 @@ def nb_simulate_lidar(robot_pose, angles, img):
     
     lidar_results = {}
     
-    result_img = np.zeros(img.shape)
-    result_img.fill(255) # Deixamos tudo branco
+
+    result_img = None
+    
+    if output_image:
+        if retorno == None:
+            result_img = np.zeros(img.shape)
+        else:
+            result_img = retorno
+
+        result_img.fill(255) # Deixamos tudo branco
+
     
     x0 = robot_pose[0]
     y0 = robot_pose[1]
 
     # Se o robô simulado (que pode ser uma partícula) já estiver fora da imagem, retornamos zero
     if nb_outside_image(int(x0), int(y0), img):
-    	for a in angles:
-    		lidar_results[a] = 0
+        for a in angles:
+            lidar_results[a] = 0
 
-    	return lidar_results, result_img
+        return lidar_results, result_img
 
 
     
@@ -264,7 +273,8 @@ def nb_simulate_lidar(robot_pose, angles, img):
         #print("vers ", ang, "  " , vers)
 
         while (True):
-            result_img[int(y), int(x)] = 0 # Marcamos o raio na imagem y,x porque numpy e' linha, coluna
+            if output_image:
+                result_img[int(y), int(x)] = 0 # Marcamos o raio na imagem y,x porque numpy e' linha, coluna
             if nb_outside_image(int(x), int(y), img):
                 # A imagem acabou, nao achamos nada
                 lidar_results[angulo] = 0
