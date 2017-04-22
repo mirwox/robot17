@@ -417,7 +417,7 @@ def nb_simulate_lidar_fast(robot_pose, angles, img, retorno = None, output_image
 
         
         if output_image == True:
-            cv2.line(result_img,(x,y),(int(ponto[0]),int(ponto[1])),(0,0,0),2)
+            cv2.line(result_img,(int(x),int(y)),(int(ponto[0]),int(ponto[1])),(0,0,0),2)
             
     return lidar_results, result_img
 
