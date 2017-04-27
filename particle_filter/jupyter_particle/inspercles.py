@@ -323,15 +323,13 @@ def intersecao_mais_proxima(ray_origin, ray_direction, lines):
     intersecoes = intersecao_linhas(ray_origin, ray_direction, lines)
     x = ray_origin[0]
     y = ray_origin[1]
-    dists = np.sqrt(np.power(intersecoes[:,0]-x,2), np.power(intersecoes[:,1]-y,2))
+    dists = np.sqrt(np.power(intersecoes[:,0]-x,2)+ np.power(intersecoes[:,1]-y,2))
     minimo = np.min(dists)
     i, = np.where( dists==minimo )
     i = i[0]
     p_int = (intersecoes[i,0] , intersecoes[i, 1])
     return dists[i], p_int
     
-
-
 
 
 def intersecao_linhas(ray_origin, ray_direction, lines):
@@ -413,11 +411,12 @@ def nb_simulate_lidar_fast(robot_pose, angles, img, retorno = None, output_image
 
         dist, ponto = intersecao_mais_proxima(ray_origin, ray_direction, lines)
 
+
         lidar_results[angulo] = dist 
 
         
         if output_image == True:
-            cv2.line(result_img,(x,y),(int(ponto[0]),int(ponto[1])),(0,0,0),2)
+            cv2.line(result_img,(int(x),int(y)),(int(ponto[0]),int(ponto[1])),(0,0,0),1)
             
     return lidar_results, result_img
 
