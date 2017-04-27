@@ -33,9 +33,9 @@ Atenção: este <font color=red>**não**</font> é o enunciado do projeto final.
 
 ## Carro autônomo
 Desenvolver algoritmos para o carro autônomo usando o simulador da Udacity
-https://github.com/udacity/self-driving-car-sim
+[https://github.com/udacity/self-driving-car-sim](https://github.com/udacity/self-driving-car-sim)
 
-##SLAM 3D (com câmera 3D ou Kinect V2)
+## SLAM 3D (com câmera 3D ou Kinect V2)
 SLAM signfica *Simultaneous localization and Mapping*
 
 [https://www.youtube.com/watch?v=AMLwjo80WzI](https://www.youtube.com/watch?v=AMLwjo80WzI)
@@ -63,7 +63,7 @@ Inspiração: [MicroPython](https://micropython.org/)
 
 
 
-##Classificação de objetos em 3D
+## Classificação de objetos em 3D
 
 Criar uma missão para um robô em que seja necessário reconhece rum objeto em 3D.
 
