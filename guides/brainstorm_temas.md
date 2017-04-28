@@ -38,7 +38,7 @@ Desenvolver algoritmos para o carro autônomo usando o simulador da Udacity
 Há algumas opções de projeto *default* para usar o carro da Udacity:
 
 * Localização - filtro de partículas
-* Aprender a dirigir com um humano [usando redes neurais](http://jeremyshannon.com/2017/02/10/udacity-sdcnd-behavioral-cloning.html)
+* Aprender a dirigir com um humano [usando redes neurais](http://jeremyshannon.com/2017/02/10/udacity-sdcnd-behavioral-cloning.html). [Como iniciar seu projeto](https://medium.com/towards-data-science/introduction-to-udacity-self-driving-car-simulator-4d78198d301d)
 * Manter o carro na faixa
 
 
