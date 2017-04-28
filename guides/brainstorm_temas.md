@@ -100,7 +100,7 @@ Exemplos de projetos:
 * [Atuadores flexíveis](https://www.extremetech.com/extreme/174723-soft-robotic-gripper-uses-vacuum-pressure-and-a-beanbag-to-move-objects)
 
 
-##Robô humanóide
+## Robô humanóide
 
 O ROS Kinetic / Gazebo podem simular robôs humanóides como os do DARPA Challenge.
 
