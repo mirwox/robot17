@@ -22,7 +22,7 @@ Atenção: este <font color=red>**não**</font> é o enunciado do projeto final.
 
 # Hardware disponível
 
-* Neatos (com RPy 3)
+* Neatos (com RPi 3)
 * [Intel Realsense F200](http://roscon.ros.org/2016/presentations/ROSCon2016_Intel_RealSense.pdf) (http://roscon.ros.org/2015/presentations/ROSCon-2015-Intel-RealSense-Robotics-Innocation-Program-ROS-interface.pdf)
 * [Microsoft Kinect V2](https://www.youtube.com/watch?v=YZwlt2msvpI)
 * [Parrot Bebop 2](https://www.youtube.com/watch?v=INXMAZvtCw8)
@@ -34,6 +34,15 @@ Atenção: este <font color=red>**não**</font> é o enunciado do projeto final.
 ## Carro autônomo
 Desenvolver algoritmos para o carro autônomo usando o simulador da Udacity
 [https://github.com/udacity/self-driving-car-sim](https://github.com/udacity/self-driving-car-sim)
+
+Há algumas opções de projeto *default* para usar o carro da Udacity:
+
+* Localização - filtro de partículas
+* Aprender a dirigir com um humano [usando redes neurais](http://jeremyshannon.com/2017/02/10/udacity-sdcnd-behavioral-cloning.html)
+* Manter o carro na faixa
+
+
+
 
 ## SLAM 3D (com câmera 3D ou Kinect V2)
 SLAM signfica *Simultaneous localization and Mapping*
