@@ -174,5 +174,13 @@ Controle de NPCs em jogos: [http://web.cs.ucdavis.edu/~vemuri/classes/gamesclass
 
 [Evolução de robôs inteiros](https://www.youtube.com/watch?v=JBgG_VSP7f8)
 
-## Explore! Artificial Intelligence a Modern Approach
+## Explore!
+
+### Artificial Intelligence a Modern Approach
 Qualquer tema que conste do  livro texto do curso [Artificial Intelligence - A Modern Approach](http://aima.cs.berkeley.edu/contents.html)
+
+### Seja criativo!
+
+Temais mais livres e artísticos, desde que empreguem técnicas de robótica, também são possíveis. Exemplos:
+* Um robô que identifica e segue seu dono
+* Robôs que desenham no chão (rastreados por Alvar)
